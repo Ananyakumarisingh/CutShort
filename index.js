@@ -1,9 +1,10 @@
 const express = require("express");
 const router = require("./routes/url.route");
+const connectMongo = require("./config/db");
 const app = express();
-route
 
-const Port = process.env.Port || 3500;
+
+const PORT = process.env.PORT || 3500;
 
 // app.set('view engine', 'ejs')
 
@@ -12,4 +13,11 @@ app.use("/", router);
 
 
 
-app.listen(Port);
+app.listen(PORT, async() => {
+    try {
+      await connectMongo();
+      console.log(`Running at PORT: ${PORT}`);
+    } catch (error) {
+      console.log(error);
+    }
+});
