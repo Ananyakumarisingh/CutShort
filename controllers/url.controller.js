@@ -13,6 +13,6 @@ exports.generateNewShortURL = async(req, res) => {
         redirectUrl: payload.url,
         visitHistory: [],
     });
-
+    
     return res.json({ id: shortId });
 };
