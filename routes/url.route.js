@@ -8,8 +8,8 @@ router.post("/", controller.generateNewShortURL);
 // ! GET
 router.get("/:shortid", controller.fetchShortURL);
 
-// // ! GET
-// router.get("/:shortid", controller.getShortURL);
+// ! GET
+router.get("/analytics/:shortid", controller.getAnalytics);
 
 
 module.exports = router;

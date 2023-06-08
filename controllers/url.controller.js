@@ -14,15 +14,27 @@ exports.generateNewShortURL = async(req, res) => {
         visitHistory: [],
     });
     
-    return res.json({ id: shortId });
+    return res.status(202).json({ id: shortId });
 };
 
 exports.fetchShortURL = async(req, res) => {
-    const shortId = req.params.shortId;
-    await URLModel.findOneAndUpdate( { shortId }, { $push: {
+    const shortId = req.params.shortid;
+    const entry = await URLModel.findOneAndUpdate( { shortId }, { $push: {
         visitHistory: { 
             timestamp: Date.now(),
         }
     }});
     res.redirect(entry.redirectUrl);
 };
+
+exports.getAnalytics = async(req, res) => {
+    const shortId = req.params.shortid;
+    let totalClicks = await URLModel.findOne( { shortId } );
+    
+    return res.status(201).json({
+      totalClicks: totalClicks.visitHistory.length,
+      analytics: totalClicks.visitHistory,
+    });
+
+};
+
