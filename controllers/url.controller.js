@@ -16,3 +16,13 @@ exports.generateNewShortURL = async(req, res) => {
     
     return res.json({ id: shortId });
 };
+
+exports.fetchShortURL = async(req, res) => {
+    const shortId = req.params.shortId;
+    await URLModel.findOneAndUpdate( { shortId }, { $push: {
+        visitHistory: { 
+            timestamp: Date.now(),
+        }
+    }});
+    res.redirect(entry.redirectUrl);
+};
