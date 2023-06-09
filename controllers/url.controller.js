@@ -14,7 +14,7 @@ exports.generateNewShortURL = async(req, res) => {
         visitHistory: [],
     });
     
-    return res.status(202).json({ id: shortId });
+    return res.status(201).json({ id: shortId });
 };
 
 exports.fetchShortURL = async(req, res) => {
@@ -31,7 +31,7 @@ exports.getAnalytics = async(req, res) => {
     const shortId = req.params.shortid;
     let totalClicks = await URLModel.findOne( { shortId } );
     
-    return res.status(201).json({
+    return res.status(200).json({
       totalClicks: totalClicks.visitHistory.length,
       analytics: totalClicks.visitHistory,
     });
